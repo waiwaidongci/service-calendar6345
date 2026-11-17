@@ -4,3 +4,24 @@
 .page-heading{border-left:10px double var(--accent);padding-left:25px}.sidebar{border-right:8px double var(--accent)}.topline{border-bottom:3px double var(--ink)}.inbox article{border-top:1px dashed var(--accent);border-bottom:1px dashed var(--accent)}.metrics>div{border-left:0;border-top:4px solid var(--accent);padding:14px 5px}.overview-count{border-top:0;border-right:2px solid var(--accent);padding-right:20px}.login-story{background:var(--paper);color:var(--ink);border-right:25px solid var(--ink)}.login-form{background:color-mix(in oklch,var(--accent) 10%,var(--paper))}
 
 .policy-row{display:flex;flex-wrap:wrap;gap:15px;align-items:end;border-bottom:1px solid var(--line);padding:12px 0}.policy-row label{flex:1;min-width:140px}.policy-row button{font-size:11px;margin-bottom:14px;background:transparent;color:var(--ink)}#add-policy-row{background:transparent;color:var(--accent);border-color:var(--accent);margin:15px 0 25px}fieldset{border:1px solid var(--line);margin:20px 0}.weekday{display:inline-flex;align-items:center;margin:10px}.weekday input{width:auto;margin:0 6px 0 0}input[type=number]{appearance:textfield}
+
+/* 增量透视：水位票根与建账进度条 */
+.pivot-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:0;border-block:3px double var(--ink);margin:20px 0 12px}
+.pivot-meta>div{padding:14px 16px;border-right:1px dashed var(--line)}
+.pivot-meta>div:last-child{border-right:0}
+.pivot-meta small{display:block;font-size:11px;color:var(--muted);letter-spacing:.06em}
+.pivot-meta strong{display:block;font:600 22px 'DM Sans','Noto Serif SC',serif;margin-top:6px}
+.pivot-meta strong.small{font-size:13px;font-weight:400}
+.pivot-meta strong.attention{color:oklch(.5 .18 25)}
+.pivot-reason{font-size:12px;padding:12px 14px;border-left:4px solid var(--accent);background:color-mix(in oklch,var(--accent) 7%,var(--paper));margin:0 0 25px}
+.pivot-reason.attention{border-left-color:oklch(.5 .18 25)}
+.pivot-build{border:1px solid var(--line);padding:18px 20px;margin:20px 0 30px;background:color-mix(in oklch,var(--accent) 5%,var(--paper))}
+.pivot-build h3{margin:0 0 10px;font-size:17px}
+.pivot-build p{font-size:12px;margin:8px 0 0}
+.pivot-progress .bar{height:8px;background:color-mix(in oklch,var(--ink) 12%,var(--paper));border-radius:0;overflow:hidden}
+.pivot-progress .bar i{display:block;height:100%;background:var(--accent);transition:width .4s cubic-bezier(.16,1,.3,1)}
+.pivot-progress p{margin:8px 0 0;font-size:12px;color:var(--muted)}
+.hint{font-size:12px;color:var(--muted)}
+.pivot-actions{margin:25px 0;display:flex;flex-wrap:wrap;gap:15px;align-items:center}
+button.ghost{background:transparent;color:var(--accent);border-color:var(--accent);font-size:12px;padding:8px 14px}
+@media(max-width:767px){.pivot-meta{grid-template-columns:repeat(2,1fr)}.pivot-meta>div{border-bottom:1px dashed var(--line)}}

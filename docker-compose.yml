@@ -29,6 +29,7 @@ services:
       REDIS_URL: redis://redis:6379/0
       JWT_SECRET: ${JWT_SECRET:-service-calendar-local-demo-change-before-production-2026}
       SEED_DEMO: "true"
+      PIVOT_INLINE: "true"
     ports: ["${BACKEND_PORT:-19252}:8000"]
     volumes: ["report-files:/app/artifacts"]
     depends_on:

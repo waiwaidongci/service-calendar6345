@@ -6,6 +6,7 @@ from src.models.source import Source,Policy,Period
 from src.models import run
 from src.utils.security import password_hash
 from src.services.validation import validate_source
+from src.services import pivot
 
 def demo_rows():
  rng=random.Random(42);rows=[]
@@ -15,6 +16,7 @@ def demo_rows():
 
 def seed():
  Base.metadata.create_all(engine)
+ pivot.ensure_control()
  with Session() as db:
   for role in ('admin','analyst','viewer'):
    if not db.query(User).filter_by(email=role+'@demo.local').first():db.add(User(email=role+'@demo.local',role=role,password=password_hash('Demo2026!')))
@@ -23,7 +25,12 @@ def seed():
    if not db.query(Period).filter_by(name=name).first():db.add(Period(name=name,description='合成演示业务期间，seed=42'))
   for i,data in enumerate(rows):
    validate_source(data);key='demo-'+str(i+1)
-   if not db.query(Source).filter_by(natural_key=key).first():db.add(Source(natural_key=key,data=data))
-  if not db.query(Policy).filter_by(version=CONFIG['policy']['version']).first():db.add(Policy(version=CONFIG['policy']['version'],data=CONFIG['policy']))
-  db.commit();print(json.dumps({'users':db.query(User).count(),'sources':db.query(Source).count(),'policies':db.query(Policy).count(),'periods':db.query(Period).count()},ensure_ascii=False))
+   if not db.query(Source).filter_by(natural_key=key).first():
+    obj=Source(natural_key=key,data=data,revision=0);db.add(obj);db.flush()
+    pivot.record_change(db,obj.id,'upsert',data,'seed')
+  policy=db.query(Policy).filter_by(version=CONFIG['policy']['version']).first()
+  if not policy:
+   policy=Policy(version=CONFIG['policy']['version'],data=CONFIG['policy']);db.add(policy)
+  db.commit()
+  pivot.ensure_default_snapshot(db);print(json.dumps({'users':db.query(User).count(),'sources':db.query(Source).count(),'policies':db.query(Policy).count(),'periods':db.query(Period).count()},ensure_ascii=False))
 if __name__=='__main__':seed()

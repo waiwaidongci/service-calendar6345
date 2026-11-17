@@ -6,6 +6,7 @@ class Period(Base):
 class Source(Base):
  __tablename__='service_cases'
  id=Column(Integer,primary_key=True); natural_key=Column(String(120),unique=True); data=Column(JSON,nullable=False)
+ revision=Column(Integer,nullable=False,default=0)
 class Policy(Base):
  __tablename__='business_calendars'
  id=Column(Integer,primary_key=True); version=Column(String(120),unique=True); data=Column(JSON,nullable=False)
